@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GEOFlow</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,"Microsoft YaHei",sans-serif;background:#f6f7f2;color:#17201a}a{color:inherit;text-decoration:none}.shell{min-height:100vh;display:grid;grid-template-columns:260px 1fr}.side{background:#fff;border-right:1px solid #ddd;padding:24px;position:sticky;top:0;height:100vh}.brand{font-size:28px;font-weight:800;color:#356859}.nav{display:grid;gap:10px;margin-top:34px}.nav a{padding:12px 14px;border-radius:8px}.nav a:hover,.nav a.active{background:#d8efe3}.main{padding:34px}.hero{min-height:360px;display:grid;align-content:center;border-bottom:1px solid #ddd;background:#fff;margin:-34px -34px 28px;padding:34px}.eyebrow{color:#e46f5d;font-weight:700}.hero h1{font-size:56px;line-height:1.05;margin:16px 0 18px;max-width:900px}.hero p{font-size:18px;color:#5d685f;max-width:760px;line-height:1.7}.grid{display:grid;gap:18px}.cols3{grid-template-columns:repeat(3,minmax(0,1fr))}.cols2{grid-template-columns:repeat(2,minmax(0,1fr))}.card{background:#fff;border:1px solid #ddd;border-radius:8px;padding:22px;box-shadow:0 1px 2px rgba(0,0,0,.04)}.card h2{margin:0 0 12px;font-size:20px}.muted{color:#68736c;line-height:1.7}.badge{display:inline-block;background:#d8efe3;color:#356859;border-radius:6px;padding:5px 9px;font-size:12px;font-weight:700}.btn{display:inline-block;background:#356859;color:#fff;border-radius:8px;padding:12px 16px;margin-top:18px}.bar{height:10px;background:#edf1ed;border-radius:999px;overflow:hidden}.bar span{display:block;height:100%;background:#e46f5d}.section{margin-top:28px}.article{display:grid;gap:8px}.row{display:flex;justify-content:space-between;gap:16px;border-bottom:1px solid #eee;padding:10px 0}.mobile-nav{display:none;background:#fff;border-bottom:1px solid #ddd;padding:14px 18px}.mobile-nav strong{color:#356859}@media(max-width:880px){.shell{display:block}.side{display:none}.mobile-nav{display:block}.main{padding:20px}.hero{margin:-20px -20px 20px;padding:24px;min-height:auto}.hero h1{font-size:38px}.cols3,.cols2{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="mobile-nav"><strong>GEOFlow</strong></div>
+  <div class="shell">
+    <aside class="side">
+      <div class="brand">GEOFlow</div>
+      <nav class="nav">
+        <a class="active" href="#dashboard">运营总览</a>
+        <a href="#merchants">商家管理</a>
+        <a href="#articles">稿件工作台</a>
+        <a href="#monitor">监测看板</a>
+        <a href="#settings">系统设置</a>
+      </nav>
+    </aside>
+    <main class="main">
+      <section class="hero" id="dashboard">
+        <div class="eyebrow">GEOFlow MVP</div>
+        <h1>生成式引擎优化全流程工具</h1>
+        <p>面向本地小店，覆盖商家信息采集、AI 友好档案蒸馏、稿件生成与审核、手动发布记录、AI 检索提及率监测。</p>
+        <a class="btn" href="#merchants">进入运营后台</a>
+      </section>
+      <section class="grid cols3">
+        <div class="card"><h2>商家档案</h2><p class="muted">问卷、文档、高德 POI 信息统一沉淀，形成可复核的品牌资料。</p></div>
+        <div class="card"><h2>内容生产</h2><p class="muted">基于豆包 API 生成品牌介绍、问答文、探店推荐和榜单内容。</p></div>
+        <div class="card"><h2>监测看板</h2><p class="muted">按查询词、模型、商家维度追踪 AI 问答入口中的提及表现。</p></div>
+      </section>
+      <section class="section grid cols2" id="merchants">
+        <div class="card"><h2>老王烧烤 <span class="badge">standard</span></h2><p class="muted">成都武侯区 · 炭火烧烤 · 人均 50 元<br>玉林路88号 · 17:00-02:00</p></div>
+        <div class="card"><h2>AI 友好档案</h2><p class="muted">别名：老王烤串、老王炭烤<br>卖点：现穿现烤、10年老店、人均亲民、大众点评4.6分。</p></div>
+      </section>
+      <section class="section card" id="articles"><h2>稿件工作台</h2><div class="article"><div class="row"><span>成都烧烤推荐：老王烧烤这家10年老店值得收藏</span><span class="badge">待审核</span></div><div class="row"><span>成都武侯区有哪些性价比高的烧烤？</span><span class="badge">已通过</span></div></div></section>
+      <section class="section grid cols2" id="monitor"><div class="card"><h2>提及率趋势</h2><p class="muted">第1周 18% → 第5周 58%</p><div class="bar"><span style="width:58%"></span></div></div><div class="card"><h2>平台策略</h2><p class="muted">头条号 40% / 百家号 25% / 知乎 20% / 自建站 15%</p></div></section>
+      <section class="section card" id="settings"><h2>系统设置</h2><p class="muted">Supabase、豆包、高德、Vercel Cron 环境变量已在项目中预留。完整 Next.js 后台代码已经上传到 GitHub 仓库。</p></section>
+    </main>
+  </div>
+</body>
+</html>

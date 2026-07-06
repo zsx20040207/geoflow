@@ -9,4 +9,9 @@ GEOFlow 是面向本地小店的生成式引擎优化运营工具，覆盖商家
 3. 安装依赖后运行 `npm run dev`。
 
 未配置 Supabase 时，页面会使用内置样例数据，便于先查看产品流程。
-Trigger Vercel deployment.
+
+## 下一阶段：云端数据
+
+当前版本已经加入 Supabase 后端 API 支持。配置方式见 `docs/SUPABASE_SETUP.md`。
+
+配置 Supabase 环境变量后，商家、稿件和问卷接口会自动从样例模式切换到云数据库模式。

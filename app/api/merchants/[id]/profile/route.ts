@@ -1,0 +1,1 @@
+import { NextResponse } from "next/server"; import { merchants } from "@/lib/mock-data"; export async function GET(_:Request,{params}:{params:{id:string}}){return NextResponse.json({data:(merchants.find(m=>m.id===params.id)||merchants[0]).profile_json})} export async function PUT(req:Request){return NextResponse.json({data:await req.json(),mock:true})}

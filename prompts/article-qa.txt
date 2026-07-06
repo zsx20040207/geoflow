@@ -1,0 +1,2 @@
+请根据商家档案写一篇问答体文章，先直接回答，再展开卖点，结尾附 FAQPage 结构化标记。商家档案：{brand_profile}
+目标查询词：{target_query}

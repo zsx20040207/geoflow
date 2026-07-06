@@ -1,0 +1,1 @@
+import { NextResponse } from "next/server"; import { runMonitorCheck } from "@/lib/ai/monitor"; export async function POST(req:Request){const body=await req.json(); return NextResponse.json(await runMonitorCheck(body.query_text||"附近推荐", body.brand_names||[]))}

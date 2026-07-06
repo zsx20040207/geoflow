@@ -1,0 +1,1 @@
+export async function callQwen(){throw new Error("千问接口预留，MVP 暂未启用")}

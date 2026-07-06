@@ -1,0 +1,1 @@
+import { NextResponse } from "next/server"; import { articles } from "@/lib/mock-data"; export async function GET(_:Request,{params}:{params:{id:string}}){return NextResponse.json({data:articles.find(a=>a.id===params.id)||null})} export async function PUT(req:Request,{params}:{params:{id:string}}){return NextResponse.json({data:{id:params.id,...await req.json()},mock:true})}

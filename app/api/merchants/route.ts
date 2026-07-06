@@ -1,0 +1,1 @@
+import { NextResponse } from "next/server"; import { merchants } from "@/lib/mock-data"; export async function GET(){return NextResponse.json({data:merchants})} export async function POST(req:Request){const body=await req.json(); return NextResponse.json({data:{id:crypto.randomUUID(),...body},mock:true},{status:201})}

@@ -1,0 +1,1 @@
+import { NextResponse } from "next/server"; import { searchAmapPoi } from "@/lib/amap"; export async function POST(req:Request){const {keyword,city}=await req.json(); return NextResponse.json(await searchAmapPoi(keyword,city))}

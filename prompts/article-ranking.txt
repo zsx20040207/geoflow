@@ -1,0 +1,2 @@
+请根据商家档案写一篇本地榜单文，目标品牌排在 3-5 位，附 ItemList 和 LocalBusiness 标记。商家档案：{brand_profile}
+目标查询词：{target_query}

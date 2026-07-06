@@ -1,0 +1,14 @@
+create table if not exists merchants (id uuid default gen_random_uuid() primary key,name varchar(100) not null,category varchar(50),subcategory varchar(50),province varchar(50),city varchar(50),district varchar(50),address text,phone varchar(20),business_hours varchar(100),years_in_business int,avg_price decimal(10,2),profile_json jsonb,raw_data jsonb,status varchar(20) default 'active',plan varchar(20),created_at timestamptz default now(),updated_at timestamptz default now());
+create table if not exists survey_submissions (id uuid default gen_random_uuid() primary key,merchant_id uuid references merchants(id) on delete cascade,form_data jsonb not null,uploaded_files jsonb,status varchar(20) default 'pending',created_at timestamptz default now());
+create table if not exists articles (id uuid default gen_random_uuid() primary key,merchant_id uuid references merchants(id) on delete cascade,article_type varchar(20),target_query varchar(200),target_platform varchar(50),title varchar(200),content text,schema_markup jsonb,status varchar(20) default 'draft',scheduled_at timestamptz,published_at timestamptz,published_url varchar(500),created_at timestamptz default now(),updated_at timestamptz default now());
+create table if not exists publishing_rules (id uuid default gen_random_uuid() primary key,merchant_id uuid references merchants(id) on delete cascade,frequency_days int default 3,time_window_start time default '09:00',time_window_end time default '18:00',platform_weights jsonb default '{"toutiao":0.4,"baijiahao":0.25,"zhihu":0.2,"self_site":0.15}',active boolean default true,created_at timestamptz default now());
+create table if not exists monitor_queries (id uuid default gen_random_uuid() primary key,merchant_id uuid references merchants(id) on delete cascade,query_text varchar(300) not null,is_active boolean default true,created_at timestamptz default now());
+create table if not exists monitor_results (id uuid default gen_random_uuid() primary key,merchant_id uuid references merchants(id) on delete cascade,query_id uuid references monitor_queries(id) on delete cascade,model_name varchar(50),model_response text,is_mentioned boolean,mention_position int,mention_context text,mention_sentiment varchar(20),has_specific_info boolean,checked_at timestamptz default now());
+create table if not exists amap_data (id uuid default gen_random_uuid() primary key,merchant_id uuid references merchants(id) on delete cascade,poi_id varchar(50),poi_name varchar(200),raw_data jsonb,processed boolean default false,fetched_at timestamptz default now());
+alter table merchants enable row level security;
+alter table survey_submissions enable row level security;
+alter table articles enable row level security;
+alter table publishing_rules enable row level security;
+alter table monitor_queries enable row level security;
+alter table monitor_results enable row level security;
+alter table amap_data enable row level security;

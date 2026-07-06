@@ -1,0 +1,1 @@
+import { MerchantForm } from "@/components/merchant-form"; import { Card, PageTitle } from "@/components/ui"; export default function Page(){return <><PageTitle title="商家问卷" desc="填写店铺基础信息、卖点、招牌产品和口碑亮点，支持后续文档上传补充。"/><div className="p-6"><Card><MerchantForm/></Card></div></>}

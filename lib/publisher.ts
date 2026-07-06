@@ -1,0 +1,1 @@
+export function getDuePublishItems<T extends {status:string;scheduled_at?:string}>(items:T[], now=new Date()){return items.filter(i=>i.status==="scheduled" && i.scheduled_at && new Date(i.scheduled_at)<=now)}

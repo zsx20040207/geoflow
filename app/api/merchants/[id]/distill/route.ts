@@ -1,0 +1,1 @@
+import { NextResponse } from "next/server"; import { distillMerchant } from "@/lib/distill"; export async function POST(req:Request,{params}:{params:{id:string}}){const body=await req.json().catch(()=>({})); const profile=await distillMerchant({merchant_id:params.id,...body}); return NextResponse.json({data:profile})}

@@ -1,0 +1,2 @@
+请根据商家档案写一篇品牌介绍文，标题包含城市、品类和品牌名，结尾附 JSON-LD LocalBusiness。商家档案：{brand_profile}
+目标查询词：{target_query}

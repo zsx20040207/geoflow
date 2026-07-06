@@ -1,0 +1,2 @@
+export type Merchant={id:string;name:string;category:string;subcategory:string;province:string;city:string;district:string;address:string;phone:string;business_hours:string;years_in_business:number;avg_price:number;status:string;plan:string;profile_json?:any;raw_data?:any}
+export type Article={id:string;merchant_id:string;article_type:string;target_query:string;target_platform:string;title:string;content:string;status:string;scheduled_at?:string;published_url?:string}

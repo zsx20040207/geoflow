@@ -1,0 +1,1 @@
+import { NextResponse } from "next/server"; import { generateArticle } from "@/lib/generator"; export async function POST(req:Request){const body=await req.json(); const article=await generateArticle(body.brand_profile||{}, body.article_type||"brand_intro", body.target_query||"本地生活推荐"); return NextResponse.json({data:article})}

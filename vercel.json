@@ -1,1 +1,18 @@
-{"crons":[{"path":"/api/cron/publish-check","schedule":"0 9 * * *"},{"path":"/api/cron/monitor","schedule":"0 3 * * 1"}]}
+{
+  "crons": [
+    {
+      "path": "/api/cron/publish-check",
+      "schedule": "0 9 * * *"
+    },
+    {
+      "path": "/api/cron/monitor",
+      "schedule": "0 3 * * 1"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/index.html"
+    }
+  ]
+}

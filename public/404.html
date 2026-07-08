@@ -28,6 +28,14 @@ const sample={selected:'m1',merchants:[{id:'m1',name:'老王烧烤',category:'�
 let state=load();
 function load(){try{return JSON.parse(localStorage.getItem(KEY))||JSON.parse(JSON.stringify(sample))}catch{return JSON.parse(JSON.stringify(sample))}}
 function save(){localStorage.setItem(KEY,JSON.stringify(state));render()}
+async function apiGet(url){
+  try{
+    const res=await fetch(url,{cache:'no-store'});
+    const json=await res.json().catch(()=>({}));
+    if(!res.ok) throw new Error(json.error||'接口暂时不可用');
+    return json.data||[];
+  }catch(err){console.warn('GEOFlow API fallback:',err);return null}
+}
 async function apiPost(url,payload){
   try{
     const res=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
@@ -39,8 +47,12 @@ async function apiPost(url,payload){
     return null;
   }
 }
+function fromMerchantApi(r){const raw=r.raw_data||{};return {...raw,id:r.id,remoteId:r.id,name:r.name||raw.name||'未命名商家',category:r.category||raw.category||'',subcategory:r.subcategory||raw.subcategory||'',province:r.province||raw.province||'',city:r.city||raw.city||'',district:r.district||raw.district||'',address:r.address||raw.address||'',phone:r.phone||raw.phone||'',hours:r.business_hours||raw.hours||'',years:r.years_in_business||raw.years||0,avgPrice:Number(r.avg_price||raw.avgPrice||0)}}
+function fromArticleApi(r){return {id:r.id,remoteId:r.id,merchantId:r.merchant_id,remoteMerchantId:r.merchant_id,title:r.title,query:r.target_query,type:r.article_type,platform:r.target_platform,content:r.content,status:r.status||'pending_review',url:r.published_url||''}}
 function toMerchantApi(m){return {name:m.name,category:m.category,subcategory:m.subcategory,province:m.province,city:m.city,district:m.district,address:m.address,phone:m.phone,business_hours:m.hours,years_in_business:m.years,avg_price:m.avgPrice,raw_data:m,status:'active',plan:'standard'}}
 function toArticleApi(a){return {merchant_id:a.remoteMerchantId||a.merchantId,article_type:a.type,target_query:a.query,target_platform:a.platform,title:a.title,content:a.content,status:a.status}}
+async function ensureRemoteMerchant(m){if(m.remoteId)return m.remoteId;const remote=await apiPost('/api/merchants',toMerchantApi(m));if(remote?.id){m.remoteId=remote.id;m.id=remote.id;state.selected=m.id;save();return remote.id}return null}
+async function loadCloud(){const ms=await apiGet('/api/merchants');if(ms&&ms.length){state.merchants=ms.map(fromMerchantApi);state.selected=state.merchants[0].id}const ars=await apiGet('/api/articles');if(ars&&ars.length)state.articles=ars.map(fromArticleApi);save();msg('已读取云端数据')}
 function msg(t){const e=document.getElementById('toast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),1800)}
 function esc(s){return String(s??'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}function attr(s){return esc(s).replace(/"/g,'&quot;')}
 function merchant(){return state.merchants.find(m=>m.id===state.selected)||state.merchants[0]}
@@ -60,13 +72,14 @@ function approve(id){const a=state.articles.find(x=>x.id===id);if(a){a.status='a
 distillBtn.onclick=()=>{const m=merchant();state.profiles[m.id]=profileOf(m);save();msg('档案已生成')};
 batchGenerateBtn.onclick=async()=>{
   const m=state.merchants.find(x=>x.id===articleMerchant.value);
+  const remoteMerchantId=await ensureRemoteMerchant(m);
   const qs=(targetQueries.value||`${m.city}${m.subcategory||m.category}推荐`).split('\n').map(x=>x.trim()).filter(Boolean);
   const types=[['brand_intro','百家号'],['qa','知乎'],['recommendation','头条号'],['ranking','自建站']];
   const count=Number(countPerType.value||1);
   let made=[];
   qs.forEach(q=>types.forEach(([type,platform])=>{
     for(let i=0;i<count;i++){
-      const a={id:'a'+Date.now()+Math.random(),merchantId:m.id,remoteMerchantId:m.remoteId||m.id,title:q+'｜'+m.name,query:q,type,platform,content:articleText(m,type,q),status:'pending_review'};
+      const a={id:'a'+Date.now()+Math.random(),merchantId:m.id,remoteMerchantId:remoteMerchantId||m.remoteId||m.id,title:q+'｜'+m.name,query:q,type,platform,content:articleText(m,type,q),status:'pending_review'};
       state.articles.push(a);made.push(a);
     }
   }));
@@ -82,7 +95,7 @@ exportBtn.onclick=()=>{dataBox.value=JSON.stringify(state,null,2);navigator.clip
 importBtn.onclick=()=>showPage('settings');
 copyDataBtn.onclick=()=>{navigator.clipboard?.writeText(JSON.stringify(state,null,2));msg('已复制')};
 applyImportBtn.onclick=()=>{try{state=JSON.parse(dataBox.value);save();msg('导入成功')}catch{msg('JSON 格式不正确')}};
-resetBtn.onclick=()=>{if(confirm('确认恢复样例数据？')){state=JSON.parse(JSON.stringify(sample));save();msg('已重置')}};init();render();
+resetBtn.onclick=()=>{if(confirm('确认恢复样例数据？')){state=JSON.parse(JSON.stringify(sample));save();msg('已重置')}};init();render();loadCloud();
 </script>
 </body>
 </html>
